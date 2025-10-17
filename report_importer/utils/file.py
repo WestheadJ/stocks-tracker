@@ -1,5 +1,6 @@
 import pandas as pd
 from console_manager import console
+from datetime import date
 
 
 def read_report(path):
