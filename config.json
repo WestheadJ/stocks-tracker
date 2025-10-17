@@ -1,0 +1,19 @@
+{
+    "periods_mapping": {
+        "P1": "August",
+        "P2": "September",
+        "P3": "October",
+        "P4": "November",
+        "P5": "December",
+        "P6": "January",
+        "P7": "February",
+        "P8": "March",
+        "P9": "April",
+        "P10": "May",
+        "P11": "June",
+        "P12": "July"
+    },
+    "Tills": {
+        "MOA 14905": "App"
+    }
+}

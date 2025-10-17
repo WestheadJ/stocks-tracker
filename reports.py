@@ -1,0 +1,2 @@
+class ReportsMenu:
+    print("Report")
