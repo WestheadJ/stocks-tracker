@@ -9,7 +9,9 @@ def clean_file(path: str) -> pd.DataFrame:
     df = pd.read_excel(path, skiprows=8)  # skip header row
 
     # Drop rows that are subtotal/category total junk
-    df = df[~df["Product Name"].str.contains("Total", na=False)]
+    df = df[~df["Sub Category"].str.contains("Category", na=False)]
+    df = df[~df["Destination"].str.contains("Sub-Cat Total", na=False)]
+    df = df[~df["Product Name"].str.contains("Sub-Total", na=False)]
 
     # Clean numeric columns
     for col in ["Quantity Sold", "Value of Sales", "Net Value of Sales"]:

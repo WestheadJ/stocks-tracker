@@ -3,7 +3,7 @@ from menu import Menu
 from db.db_setup import setup_db
 from file_browser import file_browser
 from report_importer.import_file import ImportFile
-from report_importer.utils import save_import
+from report_importer import start_import
 from console_manager import log
 from reports_display import window
 
@@ -24,17 +24,22 @@ def start_reports():
         exit(0)
 
 
-def start_import():
+def import_report():
+    #  Get file
     file = file_browser()
     if file == "ESC":
         log("[INFO] No file selected. Returning to menu...")
+    # Use file
     elif file:
-        with ImportFile(file) as importer:
-            log(f"Till: {importer.till}")
-            log(f"Start: {importer.start_date}")
-            log(f"End: {importer.end_date}")
-            log(f"Period: {importer.period}")
-            save_import(importer)
+        # Start the process
+        start_import(file)
+        #
+        # with ImportFile(file) as importer:
+        #     log(f"Till: {importer.till}")
+        #     log(f"Start: {importer.start_date}")
+        #     log(f"End: {importer.end_date}")
+        #     log(f"Period: {importer.period}")
+        #     save_import(importer)
 
 
 def start_products():
@@ -52,7 +57,7 @@ def start_advanced():
 # --- Menu Options ---
 menu_options = [
     ("Reports", start_reports),
-    ("Import Report", start_import),
+    ("Import Report", import_report),
     ("Products", start_products),
     ("Configuration", start_configuration),
     ("Advanced", start_advanced),
