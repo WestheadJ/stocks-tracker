@@ -6,5 +6,5 @@ import console_manager
 
 def start_import(file):
     df = read_report(file)
-    till, start_date, end_date, period = strip_data()
+    till, start_date, end_date, period = strip_data(df)
     df = clean_frame(df)

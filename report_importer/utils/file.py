@@ -53,23 +53,24 @@ def clean_frame(df):
         Returns:
             - df (dataframe): The clean dataframe
     """
-    df.truncate(before=8)
+    df = df.truncate(before=7)
+    df.columns = df.iloc[0]
+    df = df[1:]
 
-    # remover filler data
-    df = df[~df["Sub Category"].str.contains("Category")]
-    df = df[~df["Destination"].str.contains("Sub-Cat Total")]
-    df = df[~df["Product Name"].str.contains("Sub-Total")]
+    # # remover filler data
+    df = df[~df["Product Name"].astype(str).str.contains("SubTotal", na=False)]
+    df = df[~df["Destination"].astype(str).str.contains("Sub-Cat Total", na=False)]
+    df = df[~df["Sub Category"].astype(str).str.contains("Category", na=False)]
 
-    # remove commas
-    for col in ["Quantity Sold", "Value of Sales", "Net Value of Sales"]:
-        if col in df.columns:
-            df[col] = (
-                df[col]
-                .astype(str)
-                .str.replace(",", "", regex=False)  # remove commas
-                .str.strip()
-            )
-            df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
-
-    print(df.head(10))
+    # # remove commas
+    # for col in ["Quantity Sold", "Value of Sales", "Net Value of Sales"]:
+    #     if col in df.columns:
+    #         df[col] = (
+    #             df[col]
+    #             .astype(str)
+    #             .str.replace(",", "", regex=False)  # remove commas
+    #             .str.strip()
+    #         )
+    #         df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
+    df.to_csv("file.csv")
     return df
