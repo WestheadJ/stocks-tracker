@@ -42,7 +42,34 @@ def strip_data(df):
     return till, start_date, end_date, period
 
 
+# TODO: use utils to help clean up the file removing the rows with categories in, return the new frame
 def clean_frame(df):
+    """
+    Cleans the frame from filler information in the report like a sub-category total and make data usable
+
+        Parameters:
+            - df (dataframe): The dataframe you're wanting to clean
+
+        Returns:
+            - df (dataframe): The clean dataframe
+    """
     df.truncate(before=8)
 
-    print("In progress")
+    # remover filler data
+    df = df[~df["Sub Category"].str.contains("Category")]
+    df = df[~df["Destination"].str.contains("Sub-Cat Total")]
+    df = df[~df["Product Name"].str.contains("Sub-Total")]
+
+    # remove commas
+    for col in ["Quantity Sold", "Value of Sales", "Net Value of Sales"]:
+        if col in df.columns:
+            df[col] = (
+                df[col]
+                .astype(str)
+                .str.replace(",", "", regex=False)  # remove commas
+                .str.strip()
+            )
+            df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
+
+    print(df.head(10))
+    return df

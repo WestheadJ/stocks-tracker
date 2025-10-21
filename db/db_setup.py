@@ -32,21 +32,20 @@ def setup_db(reset: bool = False):
         transient=True,
         console=console,
     ) as progress:
-
         progress.add_task("Creating sequences...", total=None)
         create_sequences(conn)
+
+        progress.add_task("Creating tills table...", total=None)
+        create_tills_table(conn)
 
         progress.add_task("Creating products table...", total=None)
         create_products_table(conn)
 
-        progress.add_task("Creating sales table...", total=None)
-        create_sales_table(conn)
-
         progress.add_task("Creating reports table...", total=None)
         create_reports_table(conn)
 
-        progress.add_task("Creating tills table...", total=None)
-        create_tills_table(conn)
+        progress.add_task("Creating sales table...", total=None)
+        create_sales_table(conn)
 
     log("[green]Database setup complete![/green]")
     conn.close()

@@ -2,8 +2,7 @@ import os
 from menu import Menu
 from db.db_setup import setup_db
 from file_browser import file_browser
-from report_importer.import_file import ImportFile
-from report_importer import start_import
+from report_importer.import_file import start_import
 from console_manager import log
 from reports_display import window
 

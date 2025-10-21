@@ -53,6 +53,6 @@ def create_reports_table(conn):
                 year INTEGER NOT NULL,
                 start_date DATE NOT NULL,
                 end_date DATE NOT NULL,
-                till_id INTEGER REFERENCE tills(till_id),
+                till_id INTEGER REFERENCES tills(till_id),
                 filename TEXT NOT NULL)"""
     )
