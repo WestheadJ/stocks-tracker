@@ -1,3 +1,7 @@
+"""
+This file contains anything to do with the report before it is imported
+"""
+
 import pandas as pd
 from console_manager import console
 from datetime import date
@@ -62,15 +66,14 @@ def clean_frame(df):
     df = df[~df["Destination"].astype(str).str.contains("Sub-Cat Total", na=False)]
     df = df[~df["Sub Category"].astype(str).str.contains("Category", na=False)]
 
-    # # remove commas
-    # for col in ["Quantity Sold", "Value of Sales", "Net Value of Sales"]:
-    #     if col in df.columns:
-    #         df[col] = (
-    #             df[col]
-    #             .astype(str)
-    #             .str.replace(",", "", regex=False)  # remove commas
-    #             .str.strip()
-    #         )
-    #         df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
-    df.to_csv("file.csv")
+    # remove commas
+    for col in ["Quantity Sold", "Value of Sales", "Net Value of Sales"]:
+        if col in df.columns:
+            df[col] = (
+                df[col]
+                .astype(str)
+                .str.replace(",", "", regex=False)  # remove commas
+                .str.strip()
+            )
+            df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
     return df

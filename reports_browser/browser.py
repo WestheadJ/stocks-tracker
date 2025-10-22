@@ -52,10 +52,8 @@ def reports_browser():
         key = readchar.readkey()
         if key == readchar.key.UP:
             index = (index - 1) % len(entries)
-            log(str(index))
         elif key == readchar.key.DOWN:
             index = (index + 1) % len(entries)
-            log(str(index))
         elif key == readchar.key.ENTER:
             if index == 0:
                 index = 0
@@ -73,7 +71,6 @@ def reports_browser():
                     level = 2
                     index = 0
                 elif level == 2:
-                    log(f"{entries[index]}")
                     return {
                         "current_year": current_year,
                         "current_month": current_month,
