@@ -29,3 +29,8 @@ def add_report(conn, month, year, start_date, end_date, till_id, filename):
     return conn.execute(
         "SELECT report_id FROM reports WHERE month = ? AND year=?;", [month, year]
     ).fetchone()[0]
+
+
+def add_products(conn, df):
+    # TODO: Needs to add the products via the df
+    print("TODO")

@@ -64,6 +64,7 @@ def clean_frame(df):
     df = df[~df["Product Name"].astype(str).str.contains("SubTotal", na=False)]
     df = df[~df["Destination"].astype(str).str.contains("Sub-Cat Total", na=False)]
     df = df[~df["Sub Category"].astype(str).str.contains("Category", na=False)]
+    df = df[~df["Destination"].astype(str).str.contains("Food", na=False)]
 
     # remove commas
     for col in ["Quantity Sold", "Value of Sales", "Net Value of Sales"]:
