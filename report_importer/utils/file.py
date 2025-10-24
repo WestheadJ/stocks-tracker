@@ -46,7 +46,6 @@ def strip_data(df):
     return till, start_date, end_date, period
 
 
-# TODO: use utils to help clean up the file removing the rows with categories in, return the new frame
 def clean_frame(df):
     """
     Cleans the frame from filler information in the report like a sub-category total and make data usable

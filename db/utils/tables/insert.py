@@ -11,4 +11,21 @@ def add_till(conn, till_name):
 
 
 def add_report(conn, month, year, start_date, end_date, till_id, filename):
-    conn.execute("INSERT INTO report")
+    conn.execute(
+        """INSERT INTO reports(month,year,start_date,end_date,till_id,filename)
+        SELECT ?,?,?,?,?,? WHERE  NOT EXISTS
+        (SELECT 1 FROM reports WHERE month=? AND year=?);""",
+        [
+            month,
+            year,
+            start_date,
+            end_date,
+            till_id,
+            filename,
+            month,
+            year,
+        ],
+    )
+    return conn.execute(
+        "SELECT report_id FROM reports WHERE month = ? AND year=?;", [month, year]
+    ).fetchone()[0]
