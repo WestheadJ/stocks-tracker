@@ -64,8 +64,9 @@ def clean_frame(df):
     df = df[~df["Product Name"].astype(str).str.contains("SubTotal", na=False)]
     df = df[~df["Destination"].astype(str).str.contains("Sub-Cat Total", na=False)]
     df = df[~df["Sub Category"].astype(str).str.contains("Category", na=False)]
-    df = df[~df["Destination"].astype(str).str.contains("Food", na=False)]
-
+    df = df[~df["Category"].astype(str).str.contains("Division", na=False)]
+    df = df[~df["Product Division"].astype(str).str.contains("Food", na=False)]
+    df = df[~df["Product Division"].astype(str).str.contains("Total", na=False)]
     # remove commas
     for col in ["Quantity Sold", "Value of Sales", "Net Value of Sales"]:
         if col in df.columns:
