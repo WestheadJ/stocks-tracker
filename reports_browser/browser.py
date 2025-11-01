@@ -12,7 +12,7 @@ console = Console()
 
 def render_controls():
     controls = Text.from_markup(
-        "[bold]↑/↓[/bold] Navigate  [bold]Enter[/bold] Expand/Select  [bold]Esc[/bold] Back  [bold]q[/bold] Quit  [bold]Tab[/bold] Toggle Console"
+        "[bold]↑/↓[/bold] Navigate  [bold]Enter[/bold] Expand/Select  [bold]Esc[/bold] Back  [bold]q[/bold] Quit "
     )
     return Panel(controls, title="Controls", border_style="yellow")
 

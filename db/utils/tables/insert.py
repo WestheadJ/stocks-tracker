@@ -61,5 +61,41 @@ def add_products(conn, df):
     # Unregister after use (optional cleanup)
     conn.unregister("new_products")
 
-def create_sales(conn,df,till_id,report_id):
+
+def add_sales(conn, df, till_id, report_id, start_date, end_date):
     # TODO: Add the sales getting the till_id, report_id
+    df = df.rename(
+        columns={
+            "Product Name": "product_name",
+            "Portion": "portion",
+            "Quantity Sold": "quantity_sold",
+        }
+    )
+
+    # 2️⃣ Register the DataFrame
+    conn.register("new_sales", df)
+
+    # 3️⃣ Insert matching product IDs
+    conn.execute(
+        """
+        INSERT INTO sales (
+            product_id, sale_start_date, sale_end_date,
+            quantity_sold, report_id, till_id
+        )
+        SELECT 
+            p.product_id,
+            ? AS sale_start_date,
+            ? AS sale_end_date,
+            ns.quantity_sold,
+            ? AS report_id,
+            ? AS till_id
+        FROM new_sales ns
+        JOIN products p
+          ON  p.product_name = ns.product_name
+          AND p.portion = ns.portion;
+    """,
+        [start_date, end_date, report_id, till_id],
+    )
+
+    # 4️⃣ Unregister the DataFrame
+    conn.unregister("new_sales")

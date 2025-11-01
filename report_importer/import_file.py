@@ -4,7 +4,7 @@ from .utils.file import read_report, strip_data, clean_frame
 import console_manager
 from .utils.utils import check_for_existing_report
 from db.db_setup import DB_NAME
-from db.utils.tables.insert import add_till, add_report, add_products
+from db.utils.tables.insert import add_till, add_report, add_products, add_sales
 
 
 def start_import(file):
@@ -22,21 +22,22 @@ def start_import(file):
         else:
             console_manager.log("Doesn't exist preparing to import")
 
-        try:
-            console_manager.log("[INFO] Adding report!")
-            till_id = add_till(conn, till)
-            report_id = add_report(
-                conn, period, year, start_date, end_date, till_id, file
-            )
-            add_products(conn, df)
-        except:
-            console_manager("[WARNING] Error adding the report to the database!")
-            conn.execute("ROLLBACK;")
-            conn.close()
-            return
+            try:
+                console_manager.log("[INFO] Adding report!")
+                till_id = add_till(conn, till)
+                report_id = add_report(
+                    conn, period, year, start_date, end_date, till_id, file
+                )
+                add_products(conn, df)
+                add_sales(conn, df, till_id, report_id, start_date, end_date)
+            except:
+                console_manager("[WARNING] Error adding the report to the database!")
+                conn.execute("ROLLBACK;")
+                conn.close()
+                return
 
-        # Create sales records
+            # Create sales records
 
-        console_manager.log("[INFO] Committing")
-        conn.execute("COMMIT;")
+            console_manager.log("[INFO] Committing")
+            conn.execute("COMMIT;")
         conn.close()

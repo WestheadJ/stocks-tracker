@@ -9,14 +9,14 @@ import pandas as pd
 
 def check_for_existing_report(conn, period, year):
 
-    exists = conn.execute(
-        "SELECT EXISTS(SELECT 1 FROM reports WHERE year = ? AND month =?) AS exists_flag;",
+    result = conn.execute(
+        "SELECT EXISTS(SELECT 1 FROM reports WHERE year = ? AND month = ?) AS exists_flag;",
         [year, period],
-    )
-    if exists:
-        return True
-    else:
-        return False
+    ).fetchone()[
+        0
+    ]  # get the actual boolean (0 or 1)
+
+    return bool(result)
 
 
 def check_for_till(conn, till):

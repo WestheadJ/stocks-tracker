@@ -30,10 +30,8 @@ def create_sales_table(conn):
         sale_start_date DATE NOT NULL,
         sale_end_date DATE NOT NULL,
         quantity_sold INTEGER NOT NULL,
-        value_of_sales DOUBLE NOT NULL,
-        net_value_of_sales DOUBLE NOT NULL,
         report_id INTEGER REFERENCES reports(report_id),
-        till TEXT NOT NULL)"""
+        till_id TEXT NOT NULL)"""
     )
 
 
