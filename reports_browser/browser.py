@@ -5,7 +5,7 @@ from rich.text import Text
 from console_manager import log, render_console
 from .utils import get_years, get_months, get_month_breakdown
 from menu import clear_terminal
-from .rendering import render_left
+from .rendering import render_panel
 
 console = Console()
 
@@ -14,7 +14,7 @@ def render_controls():
     controls = Text.from_markup(
         "[bold]↑/↓[/bold] Navigate  [bold]Enter[/bold] Expand/Select  [bold]Esc[/bold] Back  [bold]q[/bold] Quit "
     )
-    return Panel(controls, title="Controls", border_style="yellow")
+    console.print(Panel(controls, title="Controls", border_style="yellow"))
 
 
 def reports_browser():
@@ -27,13 +27,13 @@ def reports_browser():
 
     while True:
         clear_terminal()
-
+        title = "Report Browser"
         # --- Determine current items and title ---
         if level == 0:
             items = get_years()
             title = "Reports Browser - Years"
         elif level == 1:
-            items = [m[0] for m in get_months(current_year)]
+            items = get_months(current_year)
             title = f"Reports Browser - {current_year}"
         elif level == 2:
             items = get_month_breakdown(current_year, current_month)
@@ -42,11 +42,10 @@ def reports_browser():
         for each in items:
             entries.append(each)
         # --- Render controls and console ---
-        left_panel = render_left(entries, index, 0, 7)
-        console.print(left_panel)
-        controls_panel = render_controls()
-        console.print(controls_panel)
-        console.print(render_console())
+        render_panel(console, entries, index, 0, 7, title=title)
+        render_controls()
+
+        render_console()
 
         # --- Handle keys ---
         key = readchar.readkey()

@@ -3,7 +3,9 @@ from rich.table import Table
 from rich.text import Text
 
 
-def render_left(entries, selection, offset=0, max_visible=7):
+def render_panel(
+    console, entries, selection, offset=0, max_visible=7, title="Reports Browser"
+):
     """Render left navigation panel."""
     tbl = Table.grid(expand=True)
 
@@ -17,7 +19,7 @@ def render_left(entries, selection, offset=0, max_visible=7):
         tbl.add_row(Text(f"{prefix} {entry}", style=style))
     total = len(entries)
     subtitle = f"entries {start+1}-{end} of {total} • Pos {selection+1}/{total}"
-    return Panel(tbl, title="Reports Browser", subtitle=subtitle, border_style="cyan")
+    console.print(Panel(tbl, title=title, subtitle=subtitle, border_style="cyan"))
 
 
 def render_info(entry):
