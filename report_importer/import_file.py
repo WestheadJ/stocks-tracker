@@ -21,20 +21,20 @@ def start_import(file):
             console_manager.log("Exists")
         else:
             console_manager.log("Doesn't exist preparing to import")
-
-            try:
-                console_manager.log("[INFO] Adding report!")
-                till_id = add_till(conn, till)
-                report_id = add_report(
-                    conn, period, year, start_date, end_date, till_id, file
-                )
-                add_products(conn, df)
-                add_sales(conn, df, till_id, report_id, start_date, end_date)
-            except:
-                console_manager("[WARNING] Error adding the report to the database!")
-                conn.execute("ROLLBACK;")
-                conn.close()
-                return
+            df.to_csv("test.csv", sep=",")
+            # try:
+            #     console_manager.log("[INFO] Adding report!")
+            #     till_id = add_till(conn, till)
+            #     report_id = add_report(
+            #         conn, period, year, start_date, end_date, till_id, file
+            #     )
+            #     add_products(conn, df)
+            #     add_sales(conn, df, till_id, report_id, start_date, end_date)
+            # except:
+            #     console_manager("[WARNING] Error adding the report to the database!")
+            #     conn.execute("ROLLBACK;")
+            #     conn.close()
+            #     return
 
             # Create sales records
 

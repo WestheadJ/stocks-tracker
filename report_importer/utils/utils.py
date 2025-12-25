@@ -20,4 +20,5 @@ def check_for_existing_report(conn, period, year):
 
 
 def check_for_till(conn, till):
-    exists = conn.execute("INSERT")
+    # exists = conn.execute("INSERT")
+    print("till check")

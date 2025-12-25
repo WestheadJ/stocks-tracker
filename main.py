@@ -1,10 +1,10 @@
 import os
 from menu import Menu
-from db.db_setup import setup_db
 from file_browser import file_browser
 from report_importer.import_file import start_import
 from console_manager import log
 from reports_display import window
+import startup
 
 
 # --- Menu Callbacks ---
@@ -67,7 +67,7 @@ menu_options = [
 # --- Main Entry Point ---
 def main():
     if not os.path.isfile("sales_tracker.duckdb"):
-        setup_db()
+        startup.startup()
 
     main_menu = Menu("📊 Product Sales Tracker", menu_options)
     main_menu.run()

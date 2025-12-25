@@ -9,6 +9,7 @@ from db.utils.tables.tables import (
     create_reports_table,
     create_tills_table,
     create_sales_table,
+    create_portions_table,
 )
 
 console = Console()
@@ -46,6 +47,9 @@ def setup_db(reset: bool = False):
 
         progress.add_task("Creating sales table...", total=None)
         create_sales_table(conn)
+
+        progress.add_task("Creating portions table...", total=None)
+        create_portions_table(conn)
 
     log("[green]Database setup complete![/green]")
     conn.close()
